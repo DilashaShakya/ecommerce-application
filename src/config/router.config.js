@@ -1,7 +1,7 @@
 const bannerRouter = require("../modules/banners/banner.router")
 const authRouter = require("../modules/auth/auth.router")
 
-const router = require("express").Router()
+const router = require("express").Router();
 
 router.get('/', (req, res, next) =>{
     let aboutUs = {

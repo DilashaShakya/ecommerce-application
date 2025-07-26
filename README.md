@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Atlas user pw: T0dqbfDZlXhpWmOU
 Atlas username: dilashashakya
 
@@ -10,3 +11,6 @@ password: My%40pass%23123
 
 broswer(url) => laptop(fireall) => router => mainRouter (ISP) => path => LocalServer(ISP Main)=> NTA(firewall) => International Gateway() ==> Internet. 
 
+=======
+# ecommerce-application
+>>>>>>> 350ff39ad7efc7f9b890b5c3c918e449f470da92

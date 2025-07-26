@@ -1,4 +1,5 @@
-const authRouter =  require('express').Router()
+const authRouter =  require('express').Router();
+const auth = require('../../middlewares/auth.middeware');
 const uploader = require('../../middlewares/filehandling.middleware');
 const validateData = require('../../middlewares/validator.middleware');
 const authCtrl = require("./auth.controller")
@@ -27,21 +28,23 @@ authRouter.post("/register", uploader().single('image'), validateData(RegisterDT
 authRouter.route("/activate/:token")
     .get(authCtrl.activateNewRegisteredUser);
     
-authRouter.post("/login", validateData(loginRules),authCtrl.login);
+authRouter.post("/login", validateData(loginRules),authCtrl.loginUser);
 
-authRouter.route("/forget-request")
-    .post(authCtrl.forgetPassword);
+// authRouter.route("/forget-request")
+//     .post(authCtrl.forgetPassword);
 
-authRouter.route("/reset-password")
-    .patch(authCtrl.resetPassword);
+// authRouter.route("/reset-password")
+//     .patch(authCtrl.resetPassword);
 
-authRouter.route("/logout")
-    .get(authCtrl.getLogout);
+// authRouter.route("/logout")
+//     .get(authCtrl.getLogout);
 
-authRouter.route("/me")
-    .get(authCtrl.loggedInUserProfile)
-    .put(authCtrl.updateProfile);
+authRouter.get("/me", auth("Dilasha"), authCtrl.loggedInUserProfile);
 
 authRouter.get("/resend-token/:token", authCtrl.resendActivationToken);
+
+
+
+
 
 module.exports = authRouter;

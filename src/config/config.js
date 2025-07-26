@@ -23,6 +23,7 @@ const SMTPConfig = {
 
 const AppConfig={
     frontendUrl: process.env.HOME_URL ,
+    jwtSecret: process.env.JWT_SECRET,
 
 }
 

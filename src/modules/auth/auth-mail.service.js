@@ -1,3 +1,4 @@
+const { AppConfig } = require("../../config/config");
 const MailService = require("../../services/mail.services");
 
 class AuthMailService extends MailService {
@@ -51,11 +52,72 @@ class AuthMailService extends MailService {
 
     async sendWelcomeEmail(user){
         try{
-
+            return await this.sendEmail({
+                to: user.email,
+                sub: "Welcome to BinCommerce!",
+                body: `
+<div style="background-color:#f5fafd;color:#263238;font-family:'Segoe UI',Arial,sans-serif;padding:36px 22px;border-radius:10px;max-width:600px;margin:auto;box-shadow:0 2px 8px rgba(38,166,154,0.08);">
+    <div style="font-size:2em;font-weight:600;color:#26a69a;margin-bottom:18px;text-align:center;">
+        Welcome, ${user.name}!
+    </div>
+    <div style="font-size:1.1em;margin-bottom:22px;line-height:1.7;">
+        Thank you for joining <span style="color:#00897b;font-weight:500;">BinCommerce</span>!<br><br>
+        We are thrilled to have you as a part of our growing community. Your registration marks the beginning of an exciting journey where you can connect, collaborate, and thrive.<br><br>
+        At BinCommerce, we are dedicated to providing you with innovative tools and a supportive environment to help you achieve your business goals.<br>
+        Our platform is designed to empower you with seamless commerce solutions, insightful analytics, and a network of passionate professionals.<br><br>
+        We appreciate your trust in us and look forward to supporting your success every step of the way.
+    </div>
+    <div style="font-size:0.98em;color:#607d8b;margin-top:28px;text-align:center;">
+        If you have any questions or need assistance, our support team is always ready to help.<br>
+        <strong>Welcome aboard!</strong>
+        <br><br>
+        Best regards,<br>
+        <span style="color:#26a69a;font-weight:500;">The BinCommerce Team</span><br>
+        <a href="${AppConfig.frontendUrl}/login" style="color:#00897b;text-decoration:none;">support@bincommerce.com</a>
+    </div>
+</div>
+`
+            })
         }catch(exception){
             throw exception
-        }
+            }
     }
+
+    async sendResendActivationEmail(user) {
+        try {
+            return await this.sendEmail({
+                to: user.email,
+                sub: "Resend Activation Link - Activate Your BinCommerce Account",
+                body: `
+<div style="background-color:#fff3e0;color:#263238;font-family:'Segoe UI',Arial,sans-serif;padding:36px 22px;border-radius:10px;max-width:600px;margin:auto;box-shadow:0 2px 8px rgba(38,166,154,0.08);">
+    <div style="font-size:2em;font-weight:600;color:#ef6c00;margin-bottom:18px;text-align:center;">
+        Action Required: Activate Your Account
+    </div>
+    <div style="font-size:1.1em;margin-bottom:22px;line-height:1.7;">
+        Hello ${user.name},<br><br>
+        We noticed that your BinCommerce account has not been activated yet.<br>
+        To enjoy all the features and benefits of our platform, please activate your account by clicking the button below.<br><br>
+        <a href="${AppConfig.frontendUrl}/activate/${user.activationToken}" style="display:inline-block;background-color:#ef6c00;color:#fff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:1.1em;margin-bottom:20px;text-align:center;transition:background 0.3s ease;">
+            Activate My Account
+        </a>
+        <br><br>
+        <span style="font-style:italic;">If the button above doesn't work, copy and paste this link into your browser:</span><br>
+        <span style="color:#ef6c00;font-weight:bold;">http://localhost:5173/activate/${user.activationToken}</span>
+    </div>
+    <div style="font-size:0.98em;color:#607d8b;margin-top:28px;text-align:center;">
+        If you have already activated your account, please ignore this email.<br>
+        For any questions or support, feel free to contact us.<br><br>
+        Best regards,<br>
+        <span style="color:#ef6c00;font-weight:500;">The BinCommerce Team</span><br>
+        <a href="mailto:support@bincommerce.com" style="color:#ef6c00;text-decoration:none;">support@bincommerce.com</a>
+    </div>
+</div>
+`
+            })
+        } catch (exception) {
+            throw exception
+        }  
+}
 }
 
 const authMailSvc = new AuthMailService()

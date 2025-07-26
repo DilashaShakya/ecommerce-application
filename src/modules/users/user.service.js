@@ -29,6 +29,16 @@ class UserService{
             throw exception
         }   
     }
+
+    async updateSingleRowByFilter(filter, updateData) {
+    try {
+        const data = await UserModel.findOneAndUpdate(filter, { $set: updateData }, { new: true });
+        return data;
+    } catch (exception) {
+        throw exception;
+    }
+}
+
 }
 
 const userSvc = new UserService()
